@@ -1,6 +1,7 @@
 import { useBalance, useConnect, useConnection, useConnectors, useDisconnect, useSwitchChain } from 'wagmi'
-import { baseSepolia } from 'wagmi/chains'
+import { sepolia } from 'wagmi/chains'
 import { formatUnits } from 'viem'
+import { useState } from 'react'
 
 export function App() {
   const connection = useConnection()
@@ -10,16 +11,29 @@ export function App() {
   const { switchChain, isPending: isSwitching } = useSwitchChain()
   const balance = useBalance({
     address: connection.address,
-    chainId: baseSepolia.id,
-    query: { enabled: connection.isConnected && connection.chainId === baseSepolia.id },
+    chainId: sepolia.id,
+    query: { enabled: connection.isConnected && connection.chainId === sepolia.id },
   })
-  const onTargetChain = connection.chainId === baseSepolia.id
+  const onTargetChain = connection.chainId === sepolia.id
+  const shortAddress = connection.address ? `${connection.address.slice(0, 6)}...${connection.address.slice(-4)}` : ''
+  const [copyStatus, setCopyStatus] = useState('')
+
+  async function handleCopyAddress() {
+    if (!connection.address) return
+
+    try {
+      await navigator.clipboard.writeText(connection.address)
+      setCopyStatus('已复制完整地址')
+    } catch {
+      setCopyStatus('复制失败，请重试')
+    }
+  }
 
   return (
     <main className="shell">
       <header className="header">
         <div className="brand"><span className="brand-mark">S</span><span>StakeLab</span></div>
-        <span className="network">Base Sepolia · 测试网</span>
+        <span className="network">以太坊 Sepolia · 测试网</span>
       </header>
 
       <section className="hero">
@@ -37,12 +51,20 @@ export function App() {
           {connection.isConnected ? (
             <>
               <p className="label">当前地址</p>
-              <p className="address">{connection.address}</p>
+
+              <div className="address-row">
+                <p className="address">{shortAddress}</p>
+                <button className="copy-button" onClick={handleCopyAddress}>
+                  复制
+                </button>
+              </div>
+              {copyStatus && <p className="copy-status" role="status">{copyStatus}</p>}
+
               <p className="label">当前网络</p>
               <p className="value">{connection.chain?.name ?? `Chain ID ${connection.chainId}`}</p>
-              {!onTargetChain && <p className="notice">请切换到 Base Sepolia，才能读取本项目的测试网数据。</p>}
+              {!onTargetChain && <p className="notice">请切换到以太坊 Sepolia，才能读取本项目的测试网数据。</p>}
               <div className="actions">
-                {!onTargetChain && <button onClick={() => switchChain({ chainId: baseSepolia.id })} disabled={isSwitching}>{isSwitching ? '切换中…' : '切换到测试网'}</button>}
+                {!onTargetChain && <button onClick={() => switchChain({ chainId: sepolia.id })} disabled={isSwitching}>{isSwitching ? '切换中…' : '切换到测试网'}</button>}
                 <button className="secondary" onClick={() => disconnect()}>断开连接</button>
               </div>
             </>
@@ -59,8 +81,8 @@ export function App() {
         <article className="card balance-card">
           <div className="card-heading"><span>测试网余额</span><span className="dot" /></div>
           <p className="balance">{balance.data ? Number(formatUnits(balance.data.value, balance.data.decimals)).toFixed(4) : '—'} <small>ETH</small></p>
-          <p className="muted">{!connection.isConnected ? '连接钱包后读取' : !onTargetChain ? '请先切换网络' : balance.isPending ? '正在读取链上数据…' : balance.isError ? '读取失败，请稍后重试' : '数据来自 Base Sepolia 测试网'}</p>
-          {connection.address && <a href={`${baseSepolia.blockExplorers.default.url}/address/${connection.address}`} target="_blank" rel="noreferrer">在区块浏览器查看 ↗</a>}
+          <p className="muted">{!connection.isConnected ? '连接钱包后读取' : !onTargetChain ? '请先切换网络' : balance.isPending ? '正在读取链上数据…' : balance.isError ? '读取失败，请稍后重试' : '数据来自以太坊 Sepolia 测试网'}</p>
+          {connection.address && <a href={`${sepolia.blockExplorers.default.url}/address/${connection.address}`} target="_blank" rel="noreferrer">在区块浏览器查看 ↗</a>}
         </article>
       </section>
 
