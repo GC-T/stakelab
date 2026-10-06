@@ -4,7 +4,7 @@
 
 ## 为什么练这些
 
-近期 Web3 集成类任务反复要求 React/TypeScript、钱包连接、Solidity 合约集成、测试，以及清晰说明个人交付范围。岗位样本只用来发现技能缺口，不意味着本周就具备高级全栈岗位要求：[前端与合约样本](https://www.upwork.com/freelance-jobs/apply/Web3-Frontend-Solidity-Developer_~022098325087665824913/)、[Web3 集成样本](https://www.upwork.com/freelance-jobs/apply/Full-Stack-Developer-Web3-Project-Serious-Applicants-Only_~022102468787652665636/)。
+本周先补齐 StakeLab 已暴露的能力缺口：React/TypeScript 页面与 Solidity 合约之间的真实读写、交易状态、测试和英文交付说明。找任务时使用持续更新的岗位列表：[Upwork 区块链开发兼职](https://www.upwork.com/freelance-jobs/blockchain-development/)、[Web3.career 远程前端](https://web3.career/front-end+remote-jobs)、[CryptoJobsList 远程前端](https://cryptojobslist.com/remote_frontend)。列表中也会有全职、高级或地区限制岗位，必须逐条核对；单条招聘可能下架或要求登录，不把它当长期计划链接。
 
 ## 任务 1：先把链下调用测通（约 2 小时）
 
@@ -30,7 +30,7 @@
 - [ ] 跑 `npx hardhat test`、`npx hardhat build`、`npx tsc --noEmit` 和根目录 `npm run build`；记录结果。用两个测试账户检查余额隔离。
 - [ ] 用自己的钱包演示一笔 Sepolia 存款和提取，保存**合约地址、两笔交易链接、页面截图或 2–3 分钟录屏**。如果测试币暂时拿不到，先完成本地集成与页面模拟链验证，明确记录阻塞；不能把未发生的 Sepolia 交易写成已完成。
 - [ ] 在项目 README 写清运行步骤、Sepolia 合约地址、功能边界和可复现的演示；用 120–180 词英文写一段 *What I built / How I tested it / Known limitations*。
-- [ ] 收集 3 条可访问的海外兼职任务，提炼重复要求；针对其中一条写一段 80–120 词英文提案草稿，具体说明自己做过的钱包连接、合约读写和测试证据，不夸大经验。
+- [ ] 从动态岗位列表中收集 3 条当时可访问的海外任务，记下**查看日期、职位、链接、工作时长/地区限制、技术要求、自己可提供的证据**；提炼重复要求。针对其中一条写一段 80–120 词英文提案草稿，不夸大经验。
 
 ## 我们的训练方式
 
